@@ -211,6 +211,30 @@ func (self *Client) SendRtpKeepalive() (err error) {
 	return
 }
 
+func (self *Client) SendSetParameter(parameter string) (err error) {
+	if parameter == "" {
+		return
+	}
+
+	if self.DebugRtsp {
+		fmt.Println("set_parameter: ", parameter)
+	}
+	req := Request{
+		Method: "SET_PARAMETER",
+		Uri:    self.requestUri,
+	}
+	if self.session != "" {
+		req.Header = append(req.Header, "Session: "+self.session)
+	}
+
+	req.Header = append(req.Header, parameter)
+
+	if err = self.WriteRequest(req); err != nil {
+		return
+	}
+	return
+}
+
 func (self *Client) WriteRequest(req Request) (err error) {
 	self.conn.Timeout = self.RtspTimeout
 	self.cseq++
