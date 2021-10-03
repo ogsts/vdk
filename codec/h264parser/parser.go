@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/deepch/vdk/av"
-	"github.com/deepch/vdk/utils/bits"
-	"github.com/deepch/vdk/utils/bits/pio"
+	"github.com/ogsts/vdk/av"
+	"github.com/ogsts/vdk/utils/bits"
+	"github.com/ogsts/vdk/utils/bits/pio"
 )
 
 const (

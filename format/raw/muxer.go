@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"io"
 
-	"github.com/deepch/vdk/codec/h265parser"
+	"github.com/ogsts/vdk/codec/h265parser"
 
-	"github.com/deepch/vdk/codec/h264parser"
+	"github.com/ogsts/vdk/codec/h264parser"
 
-	"github.com/deepch/vdk/av"
+	"github.com/ogsts/vdk/av"
 )
 
 var startCode = []byte{0, 0, 0, 1}

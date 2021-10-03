@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/deepch/vdk/av"
+	"github.com/ogsts/vdk/av"
 )
 
 type Muxer struct {
