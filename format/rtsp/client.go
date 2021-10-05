@@ -28,8 +28,8 @@ import (
 
 var ErrCodecDataChange = fmt.Errorf("rtsp: codec data change, please call HandleCodecDataChange()")
 
-var DebugRtp = true
-var DebugRtsp = true
+var DebugRtp = false
+var DebugRtsp = false
 var SkipErrRtpBlock = false
 
 const (
