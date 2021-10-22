@@ -819,16 +819,17 @@ func (self *Stream) makeCodecData() (err error) {
 				err = fmt.Errorf("rtsp: missing h264 sps or pps")
 				return
 			}
-
-		case av.AAC:
-			if len(media.Config) == 0 {
-				err = fmt.Errorf("rtsp: aac sdp config missing")
-				return
-			}
-			if self.CodecData, err = aacparser.NewCodecDataFromMPEG4AudioConfigBytes(media.Config); err != nil {
-				err = fmt.Errorf("rtsp: aac sdp config invalid: %s", err)
-				return
-			}
+			/*
+				case av.AAC:
+					if len(media.Config) == 0 {
+						err = fmt.Errorf("rtsp: aac sdp config missing")
+						return
+					}
+					if self.CodecData, err = aacparser.NewCodecDataFromMPEG4AudioConfigBytes(media.Config); err != nil {
+						err = fmt.Errorf("rtsp: aac sdp config invalid: %s", err)
+						return
+					}
+			*/
 		case av.OPUS:
 			channelLayout := av.CH_MONO
 			if media.ChannelCount == 2 {
@@ -1246,10 +1247,12 @@ func (self *Client) handleBlock(block []byte) (pkt av.Packet, ok bool, err error
 		pkt.Time = time.Duration(stream.timestamp) * time.Second / time.Duration(stream.timeScale())
 		pkt.Idx = int8(self.setupMap[i])
 
-		if pkt.Time < stream.lasttime || pkt.Time-stream.lasttime > time.Minute*30 {
-			err = fmt.Errorf("rtp: time invalid stream#%d time=%v lasttime=%v", pkt.Idx, pkt.Time, stream.lasttime)
-			return
-		}
+		/*
+			if pkt.Time < stream.lasttime || pkt.Time-stream.lasttime > time.Minute*30 {
+				err = fmt.Errorf("rtp: time invalid stream#%d time=%v lasttime=%v", pkt.Idx, pkt.Time, stream.lasttime)
+				return
+			}
+		*/
 		stream.lasttime = pkt.Time
 
 		if self.DebugRtp {
