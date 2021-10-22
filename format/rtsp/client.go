@@ -20,7 +20,7 @@ import (
 	"github.com/ogsts/vdk/av"
 	"github.com/ogsts/vdk/av/avutil"
 	"github.com/ogsts/vdk/codec"
-	"github.com/ogsts/vdk/codec/aacparser"
+	//"github.com/ogsts/vdk/codec/aacparser"
 	"github.com/ogsts/vdk/codec/h264parser"
 	"github.com/ogsts/vdk/format/rtsp/sdp"
 	"github.com/ogsts/vdk/utils/bits/pio"
