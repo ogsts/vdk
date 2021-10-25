@@ -20,7 +20,7 @@ import (
 	"github.com/ogsts/vdk/av"
 	"github.com/ogsts/vdk/av/avutil"
 	"github.com/ogsts/vdk/codec"
-	//"github.com/ogsts/vdk/codec/aacparser"
+	"github.com/ogsts/vdk/codec/aacparser"
 	"github.com/ogsts/vdk/codec/h264parser"
 	"github.com/ogsts/vdk/format/rtsp/sdp"
 	"github.com/ogsts/vdk/utils/bits/pio"
@@ -634,6 +634,9 @@ func (self *Client) ReadResponse() (res Response, err error) {
 func (self *Client) SetupAll() (err error) {
 	idx := []int{}
 	for i := range self.streams {
+		if self.streams[i].Sdp.Type == av.AAC {
+			continue
+		}
 		idx = append(idx, i)
 	}
 	return self.Setup(idx)
@@ -819,17 +822,15 @@ func (self *Stream) makeCodecData() (err error) {
 				err = fmt.Errorf("rtsp: missing h264 sps or pps")
 				return
 			}
-			/*
-				case av.AAC:
-					if len(media.Config) == 0 {
-						err = fmt.Errorf("rtsp: aac sdp config missing")
-						return
-					}
-					if self.CodecData, err = aacparser.NewCodecDataFromMPEG4AudioConfigBytes(media.Config); err != nil {
-						err = fmt.Errorf("rtsp: aac sdp config invalid: %s", err)
-						return
-					}
-			*/
+		case av.AAC:
+			if len(media.Config) == 0 {
+				err = fmt.Errorf("rtsp: aac sdp config missing")
+				return
+			}
+			if self.CodecData, err = aacparser.NewCodecDataFromMPEG4AudioConfigBytes(media.Config); err != nil {
+				err = fmt.Errorf("rtsp: aac sdp config invalid: %s", err)
+				return
+			}
 		case av.OPUS:
 			channelLayout := av.CH_MONO
 			if media.ChannelCount == 2 {
